@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.util.ArrayList?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainPane" minHeight="765.0" minWidth="1200.0" prefHeight="765.0"
+            prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.191" fx:controller="GUI.GUI">
+    <children>
+        <MenuBar fx:id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <menus>
+                <Menu fx:id="menuMenu" mnemonicParsing="false" text="Menu">
+                    <items>
+                        <MenuItem fx:id="menuStart" mnemonicParsing="false" onAction="#startSeq" text="Start Game"/>
+                        <MenuItem fx:id="menuClear" mnemonicParsing="false" onAction="#clearText" text="Clear"/>
+                        <MenuItem fx:id="menuExit" mnemonicParsing="false" onAction="#closeGame" text="Close Game"/>
+                    </items>
+                </Menu>
+                <Menu fx:id="menuHelp" mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem fx:id="menuAbout" mnemonicParsing="false" onAction="#help" text="About"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <TextField fx:id="inputField" disable="true" onKeyPressed="#submitText" prefHeight="28.0" prefWidth="630.0"
+                   promptText="Type here..." style="-fx-background-color: #f2f2f2;" AnchorPane.bottomAnchor="0.0"
+                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="737.0">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+            <cursor>
+                <Cursor fx:constant="TEXT"/>
+            </cursor>
+        </TextField>
+        <ImageView fx:id="boardIMG" fitHeight="710.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true"
+                   AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="264.8780517578125"
+                   AnchorPane.topAnchor="28.0">
+            <image>
+                <Image url="@../img/board.png"/>
+            </image>
+            <cursor>
+                <Cursor fx:constant="DEFAULT"/>
+            </cursor>
+        </ImageView>
+        <Button fx:id="submitButton" focusTraversable="false" layoutX="631.0" layoutY="738.0" maxHeight="28.0"
+                mnemonicParsing="false" onAction="#scanText" prefHeight="26.0" prefWidth="156.0"
+                style="-fx-border-color: #ffffff;" text="Submit" textAlignment="CENTER" AnchorPane.leftAnchor="631.0"
+                AnchorPane.topAnchor="738.0">
+            <font>
+                <Font name="Steagal" size="13.0"/>
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </Button>
+        <Rectangle fx:id="BAR0" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="329.0" layoutX="429.0"
+                   layoutY="384.0" onMouseExited="#removeHighlight" stroke="#683c1f" strokeType="INSIDE"
+                   strokeWidth="2.0" width="71.0"/>
+        <Rectangle fx:id="OUT0" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="316.0" layoutX="849.0"
+                   layoutY="395.0" onMouseExited="#removeHighlight" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"
+                   width="60.0"/>
+        <Rectangle fx:id="OUT1" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="316.0" layoutX="849.0"
+                   layoutY="54.0" onMouseExited="#removeHighlight" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"
+                   width="59.0"/>
+        <Rectangle fx:id="BAR1" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="332.0" layoutX="429.0"
+                   layoutY="54.0" onMouseExited="#removeHighlight" stroke="#683c1f" strokeType="INSIDE"
+                   strokeWidth="2.0" width="71.0"/>
+        <Polygon fx:id="p1" fill="#1f93ff00" layoutX="809.0" layoutY="473.0" onMouseExited="#removeHighlight"
+                 points="-29.08551025390625, 238.74066162109375, 18.98876953125, 238.74066162109375, -5.25738525390625, -50.67138671875"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p2" fill="#1f93ff00" layoutX="757.0" layoutY="473.0" onMouseExited="#removeHighlight"
+                 points="-29.3402099609375, 238.74066162109375, 19.98822021484375, 238.74066162109375, -4.2579345703125, -51.08941650390625"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p3" fill="#1f93ff00" layoutX="705.0" layoutY="473.0" onMouseExited="#removeHighlight"
+                 points="-27.0, 238.74066162109375, 20.9876708984375, 238.74066162109375, -3.676513671875, -48.999237060546875"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p4" fill="#1f93ff00" layoutX="650.0" layoutY="473.0" onMouseExited="#removeHighlight"
+                 points="-23.2730712890625, 239.0, 24.569091796875, 239.0, 0.3228759765625, -51.5074462890625"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p5" fill="#1f93ff00" layoutX="598.0" layoutY="473.0" onMouseExited="#removeHighlight"
+                 points="-22.2967529296875, 239.0, 25.77752685546875, 239.0, 1.5313720703125, -49.835296630859375"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p6" fill="#1f93ff00" layoutX="546.0" layoutY="473.0" onMouseExited="#removeHighlight"
+                 points="-21.08831787109375, 239.0, 26.14990234375, 239.0, 2.32177734375, -48.999237060546875"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p7" fill="#1f93ff00" layoutX="388.0" layoutY="476.0" onMouseExited="#removeHighlight"
+                 points="-26.12286376953125, 235.0, 21.1153564453125, 235.0, -2.29473876953125, -50.954132080078125"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p8" fill="#1f93ff00" layoutX="340.0" layoutY="476.0" onMouseExited="#removeHighlight"
+                 points="-29.541473388671875, 235.0, 18.114776611328125, 235.0, -5.50433349609375, -51.999237060546875"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p9" fill="#1f93ff00" layoutX="284.0" layoutY="476.0" onMouseExited="#removeHighlight"
+                 points="-26.0, 235.0, 24.581298828125, 235.0, -0.714263916015625, -53.38800048828125" stroke="BLACK"
+                 strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p10" fill="#1f93ff00" layoutX="233.0" layoutY="476.0" onMouseExited="#removeHighlight"
+                 points="-24.61639404296875, 235.0, 22.966217041015625, 235.0, -0.7153167724609375, -52.78033447265625"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p11" fill="#1f93ff00" layoutX="182.0" layoutY="476.0" onMouseExited="#removeHighlight"
+                 points="-24.579513549804688, 235.0, 23.165512084960938, 235.0, -0.516021728515625, -49.342681884765625"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p12" fill="#1f93ff00" layoutX="127.0" layoutY="476.0" onMouseExited="#removeHighlight"
+                 points="-20.380210876464844, 235.0, 27.95849609375, 235.0, 3.152191162109375, -50.403472900390625"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p14" fill="#1f93ff00" layoutX="171.0" layoutY="5.0" onMouseExited="#removeHighlight"
+                 points="-14.0, 49.79110336303711, 34.0, 49.79110336303711, 10.0, 334.0" stroke="BLACK"
+                 strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p13" fill="#1f93ff00" layoutX="119.0" layoutY="5.0" onMouseExited="#removeHighlight"
+                 points="-14.0, 49.79110336303711, 35.0, 49.791099548339844, 12.062957763671875, 337.22528076171875"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p15" fill="#1f93ff00" layoutX="222.0" layoutY="5.0" onMouseExited="#removeHighlight"
+                 points="-13.960617065429688, 49.79112243652344, 34.0, 49.791114807128906, 10.703582763671875, 335.18426513671875"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p16" fill="#1f93ff00" layoutX="269.0" layoutY="5.0" onMouseExited="#removeHighlight"
+                 points="-9.960052490234375, 49.79112243652344, 38.9503173828125, 49.79112243652344, 14.286102294921875, 336.8564147949219"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p17" fill="#1f93ff00" layoutX="320.0" layoutY="5.0" onMouseExited="#removeHighlight"
+                 points="-8.906600952148438, 49.791114807128906, 39.368896484375, 49.79112243652344, 14.286651611328125, 337.6925048828125"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p18" fill="#1f93ff00" layoutX="367.0" layoutY="10.0" onMouseExited="#removeHighlight"
+                 points="-5.958953857421875, 44.79112243652344, 42.914459228515625, 44.7911262512207, 18.70526123046875, 332.6925048828125"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p19" fill="#1f93ff00" layoutX="526.0" layoutY="10.0" onMouseExited="#removeHighlight"
+                 points="-1.08831787109375, 44.79112243652344, 46.0, 44.79112243652344, 22.32177734375, 331.2293701171875"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p20" fill="#1f93ff00" layoutX="579.0" layoutY="11.0" onMouseExited="#removeHighlight"
+                 points="-3.2967529296875, 43.79112243652344, 45.0, 43.79112243652344, 20.5313720703125, 330.2293701171875"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p21" fill="#1f93ff00" layoutX="627.0" layoutY="10.0" onMouseExited="#removeHighlight"
+                 points="-0.29620361328125, 44.79112243652344, 47.000030517578125, 44.79112243652344, 23.53192138671875, 329.9752502441406"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p22" fill="#1f93ff00" layoutX="680.0" layoutY="10.0" onMouseExited="#removeHighlight"
+                 points="-3.0, 44.79112243652344, 47.000030517578125, 44.79112243652344, 22.3685302734375, 329.9752502441406"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p23" fill="#1f93ff00" layoutX="730.0" layoutY="10.0" onMouseExited="#removeHighlight"
+                 points="-1.29510498046875, 44.79112243652344, 46.36114501953125, 44.79112243652344, 22.53302001953125, 327.467041015625"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <Polygon fx:id="p24" fill="#1f93ff00" layoutX="781.0" layoutY="10.0" onMouseExited="#removeHighlight"
+                 points="-1.08551025390625, 44.79112243652344, 46.9739990234375, 44.79112243652344, 22.74261474609375, 329.5572204589844"
+                 stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+        <fx:define>
+            <ArrayList fx:id="points">
+                <fx:reference source="p1"/>
+                <fx:reference source="p2"/>
+                <fx:reference source="p3"/>
+                <fx:reference source="p4"/>
+                <fx:reference source="p5"/>
+                <fx:reference source="p6"/>
+                <fx:reference source="p7"/>
+                <fx:reference source="p8"/>
+                <fx:reference source="p9"/>
+                <fx:reference source="p10"/>
+                <fx:reference source="p11"/>
+                <fx:reference source="p12"/>
+                <fx:reference source="p13"/>
+                <fx:reference source="p14"/>
+                <fx:reference source="p15"/>
+                <fx:reference source="p16"/>
+                <fx:reference source="p17"/>
+                <fx:reference source="p18"/>
+                <fx:reference source="p19"/>
+                <fx:reference source="p20"/>
+                <fx:reference source="p21"/>
+                <fx:reference source="p22"/>
+                <fx:reference source="p23"/>
+                <fx:reference source="p24"/>
+            </ArrayList>
+        </fx:define>
+        <fx:define>
+            <ArrayList fx:id="bars">
+                <fx:reference source="BAR0"/>
+                <fx:reference source="BAR1"/>
+            </ArrayList>
+        </fx:define>
+        <fx:define>
+            <ArrayList fx:id="outs">
+                <fx:reference source="OUT0"/>
+                <fx:reference source="OUT1"/>
+            </ArrayList>
+        </fx:define>
+        <TextArea fx:id="tArea" editable="false" focusTraversable="false" layoutX="935.0" layoutY="102.0"
+                  prefHeight="683.0" prefWidth="265.0" wrapText="true" AnchorPane.bottomAnchor="0.0"
+                  AnchorPane.leftAnchor="935.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="102.0">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </TextArea>
+        <TextArea fx:id="moveArea" editable="false" focusTraversable="false" layoutX="935.0" layoutY="28.0"
+                  prefHeight="55.0" prefWidth="265.0" wrapText="true" AnchorPane.bottomAnchor="662.0"
+                  AnchorPane.leftAnchor="935.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+            <font>
+                <Font name="Steagal" size="22.0"/>
+            </font>
+        </TextArea>
+        <ImageView fx:id="die1" fitHeight="50.0" fitWidth="50.0" layoutX="31.0" layoutY="324.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/d6.png"/>
+            </image>
+            <effect>
+                <DropShadow height="20.0" radius="8.25" width="15.0"/>
+            </effect>
+        </ImageView>
+        <ImageView fx:id="die2" fitHeight="50.0" fitWidth="50.0" layoutX="31.0" layoutY="387.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/d6.png"/>
+            </image>
+            <effect>
+                <DropShadow height="17.5" radius="7.625" width="15.0"/>
+            </effect>
+        </ImageView>
+        <ImageView fx:id="doublingCube" fitHeight="50.0" fitWidth="190.0" layoutX="443.0" layoutY="362.0"
+                   pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/mult64.png"/>
+            </image>
+            <effect>
+                <DropShadow radius="8.5" width="15.0"/>
+            </effect>
+        </ImageView>
+        <Label fx:id="die1double" layoutX="43.0" layoutY="282.0" text="x2" textFill="WHITE" visible="false">
+            <font>
+                <Font name="Steagal" size="26.0"/>
+            </font>
+            <effect>
+                <DropShadow/>
+            </effect>
+        </Label>
+        <Label fx:id="die2double" layoutX="43.0" layoutY="449.0" text="x2" textFill="WHITE" visible="false">
+            <font>
+                <Font name="Steagal" size="26.0"/>
+            </font>
+            <effect>
+                <DropShadow/>
+            </effect>
+        </Label>
+        <Label alignment="CENTER" layoutX="18.0" layoutY="50.0" text="Points" textFill="WHITE">
+            <font>
+                <Font name="Steagal" size="25.0"/>
+            </font>
+        </Label>
+        <Label alignment="CENTER" layoutX="18.0" layoutY="681.0" text="Points" textFill="WHITE">
+            <font>
+                <Font name="Steagal" size="25.0"/>
+            </font>
+        </Label>
+        <Label fx:id="pointsWhite" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="18.0"
+               layoutY="646.0" prefHeight="35.0" prefWidth="71.0" text="0" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font name="Steagal" size="26.0"/>
+            </font>
+        </Label>
+        <Label fx:id="pointsBlack" alignment="CENTER" layoutX="18.0" layoutY="80.0" prefHeight="37.0" prefWidth="71.0"
+               text="0" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font name="Steagal" size="26.0"/>
+            </font>
+        </Label>
+        <ImageView fx:id="ledBlack" fitHeight="75.0" fitWidth="35.0" layoutX="904.0" layoutY="175.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/ledOff.png"/>
+            </image>
+            <effect>
+                <DropShadow/>
+            </effect>
+        </ImageView>
+        <Button fx:id="rollButton" disable="true" focusTraversable="false" layoutX="787.0" layoutY="736.0"
+                maxHeight="28.0" mnemonicParsing="false" onAction="#rollDice" prefHeight="27.0" prefWidth="148.0"
+                style="-fx-border-color: #ff0000;" text="Roll Dice" textAlignment="CENTER" textFill="RED"
+                AnchorPane.topAnchor="738.0">
+            <font>
+                <Font name="Steagal" size="13.0"/>
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </Button>
+        <ImageView fx:id="ledWhite" fitHeight="59.0" fitWidth="35.0" layoutX="904.0" layoutY="530.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/ledOff.png"/>
+            </image>
+            <effect>
+                <DropShadow/>
+            </effect>
+        </ImageView>
+        <AnchorPane fx:id="loginBackground" prefHeight="765.0" prefWidth="1200.0"
+                    style="-fx-background-color: #3a3895;">
+            <children>
+                <ImageView fitHeight="765.0" fitWidth="1103.0" layoutX="219.0" opacity="0.45" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@../img/logo.png"/>
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="61.0" fitWidth="35.0" layoutX="1134.0" layoutY="28.0" onMouseClicked="#closeGame"
+                           pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../img/exit.png"/>
+                    </image>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </ImageView>
+            </children>
+            <effect>
+                <InnerShadow/>
+            </effect>
+        </AnchorPane>
+        <AnchorPane fx:id="loginPane" layoutX="302.0" layoutY="209.0" prefHeight="329.0" prefWidth="605.0"
+                    style="-fx-background-color: #3a3895;">
+            <children>
+                <Label layoutX="208.0" layoutY="14.0" text="Welcome!" textFill="WHITE">
+                    <font>
+                        <Font name="Steagal" size="42.0"/>
+                    </font>
+                    <effect>
+                        <Glow/>
+                    </effect>
+                </Label>
+                <Label layoutX="14.0" layoutY="121.0" text="Choose your nickname" textFill="WHITE">
+                    <font>
+                        <Font name="Steagal" size="29.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="name1" layoutX="339.0" layoutY="93.0" promptText="Player 1 Nickname"
+                           style="-fx-background-color: #b7b7b7; -fx-border-style: solid none; -fx-border-color: #ffffff;"
+                           text="Player1">
+                    <font>
+                        <Font name="Steagal" size="19.0"/>
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="TEXT"/>
+                    </cursor>
+                    <tooltip>
+                        <Tooltip contentDisplay="CENTER"
+                                 text="Nickname cannot be empty or be the same as your opponent's"
+                                 textAlignment="CENTER" wrapText="true">
+                            <font>
+                                <Font name="Steagal" size="14.0"/>
+                            </font>
+                        </Tooltip>
+                    </tooltip>
+                </TextField>
+                <TextField fx:id="name2" layoutX="339.0" layoutY="145.0" promptText="Player 2 Nickname"
+                           style="-fx-background-color: #b7b7b7; -fx-border-style: solid none; -fx-border-color: #ffffff;"
+                           text="Player2">
+                    <font>
+                        <Font name="Steagal" size="19.0"/>
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="TEXT"/>
+                    </cursor>
+                    <tooltip>
+                        <Tooltip contentDisplay="CENTER"
+                                 text="Nickname cannot be empty or be the same as your opponent's"
+                                 textAlignment="CENTER" wrapText="true">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Tooltip>
+                    </tooltip>
+                </TextField>
+                <Button fx:id="loginButton" layoutX="248.0" layoutY="273.0" mnemonicParsing="false"
+                        onAction="#getNicknames" style="-fx-background-color: #3330ff;" text="SUBMIT" textFill="WHITE">
+                    <font>
+                        <Font name="Steagal" size="23.0"/>
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+                <Label layoutX="13.0" layoutY="209.0" text="Choose number of points" textFill="WHITE">
+                    <font>
+                        <Font name="Steagal" size="29.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="pointsField" alignment="CENTER" layoutX="394.0" layoutY="207.0" prefHeight="38.0"
+                           prefWidth="132.0" promptText="Points"
+                           style="-fx-background-color: #d6d6d6; -fx-border-style: solid none; -fx-border-color: #ffffff;"
+                           text="9">
+                    <font>
+                        <Font name="Steagal" size="19.0"/>
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="TEXT"/>
+                    </cursor>
+                    <tooltip>
+                        <Tooltip contentDisplay="CENTER"
+                                 text="Match ends when a player gains this positive non-zero score"
+                                 textAlignment="CENTER" wrapText="true">
+                            <font>
+                                <Font name="Steagal" size="14.0"/>
+                            </font>
+                        </Tooltip>
+                    </tooltip>
+                </TextField>
+            </children>
+            <effect>
+                <InnerShadow/>
+            </effect>
+        </AnchorPane>
+    </children>
+    <cursor>
+        <Cursor fx:constant="DEFAULT"/>
+    </cursor>
+</AnchorPane>
